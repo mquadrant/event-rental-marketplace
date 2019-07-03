@@ -1,11 +1,9 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import LandingPage from "./pages/landing-page";
+import "./App.css";
 
 function App() {
-  return (
-    <div></div>
-  );
+  return <LandingPage />;
 }
 
 export default App;
