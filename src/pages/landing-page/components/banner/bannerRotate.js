@@ -3,9 +3,9 @@ import { ImageA, ImageB, ImageC } from "../../../../images/banner_image";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import "./banner.css";
+import SearchBarForm from "./searchBarForm";
 
 const images = [ImageA, ImageB, ImageC];
 
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
+  },
+  searchBar: {
+    marginTop: 50
   }
 }));
 
@@ -82,12 +85,12 @@ export default function BannerRotate() {
                     Who knows your next neighbor might have what you are looking
                     for. Get the best rental service ever!
                   </Typography>
+                </Container>
+                <Container maxWidth="md" className={classes.searchBar}>
                   <div className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
                       <Grid item>
-                        <Button variant="contained" color="primary">
-                          Main call to action
-                        </Button>
+                        <SearchBarForm />
                       </Grid>
                     </Grid>
                   </div>

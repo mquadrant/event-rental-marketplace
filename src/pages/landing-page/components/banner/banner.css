@@ -39,7 +39,6 @@
 .slide {
   display: flex;
   flex-direction: row;
-  align-items: center;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -52,15 +51,5 @@
   text-align: center;
   color: #fff;
   z-index: 1000;
-}
-
-.slide .content {
-  /* position: absolute;
-  opacity: 1;
-  left: 50%;
-  margin-left: -50px;
-  top: 50%;
-  margin-top: -50px; */
-  /* transform: translate(200px);
-  transition: all 0.7s ease-in-out 0.3s; */
+  margin-top: 80px;
 }
