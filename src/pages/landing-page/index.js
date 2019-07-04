@@ -21,9 +21,9 @@ import Https from "@material-ui/icons/Https";
 import Search from "@material-ui/icons/Search";
 import ListIcon from "@material-ui/icons/List";
 import Box from "@material-ui/core/Box";
-import BannerRotate from "./components/bannerRotate";
+import BannerRotate from "./components/banner/bannerRotate";
 import Button from "@material-ui/core/Button";
-import LoginModal from "./components/loginModal";
+import LoginModal from "./components/login/loginModal";
 
 const iconSideMenu = [Https, Search, ListIcon];
 const drawerWidth = 240;
@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LandingPage() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [handleSignOpen, setHandleSignOpen] = React.useState(false);
 
   const [scrollAppBar, setScrollAppBar] = React.useState(false);
   const stickyStyle = `${classes.button + " "}${
@@ -115,6 +116,9 @@ export default function LandingPage() {
     return () => {};
   }, []);
 
+  function handleSignClose() {
+    setHandleSignOpen(false);
+  }
   function handleDrawerOpen() {
     clearInterval(drawInterval);
     setOpen(true);
@@ -171,7 +175,11 @@ export default function LandingPage() {
           <Button color="inherit" className={stickyStyle}>
             Help center
           </Button>
-          <Button color="inherit" className={stickyStyle}>
+          <Button
+            color="inherit"
+            className={stickyStyle}
+            onClick={() => setHandleSignOpen(true)}
+          >
             Signin
           </Button>
           <Button
@@ -222,7 +230,10 @@ export default function LandingPage() {
       >
         <div className={classes.drawerHeader} style={{ zIndex: "3300" }} />
         <BannerRotate />
-        <LoginModal />
+        <LoginModal
+          handleSignOpen={handleSignOpen}
+          handleSignClose={handleSignClose}
+        />
         <Typography paragraph>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
           ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar

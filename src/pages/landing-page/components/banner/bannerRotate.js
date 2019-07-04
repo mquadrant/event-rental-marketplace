@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ImageA, ImageB, ImageC } from "../../../images/banner_image";
+import { ImageA, ImageB, ImageC } from "../../../../images/banner_image";
 import "./banner.css";
 
 const images = [ImageA, ImageB, ImageC];
