@@ -53,8 +53,8 @@ export default function FeatureItem() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp Glass Chair"
-        subheader="July 3, 2019"
+        title="Shrimp and Chorizo Paella"
+        subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
@@ -64,7 +64,8 @@ export default function FeatureItem() {
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests.
+          together with your guests. Add 1 cup of frozen peas along with the
+          mussels, if you like.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

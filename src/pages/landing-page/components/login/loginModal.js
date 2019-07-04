@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography, Paper } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
+import Button from "@material-ui/core/Button";
 import LoginForm from "./loginForm";
 
 function getModalStyle() {
