@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ImageA, ImageB, ImageC } from "../../../../images/banner_image";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 import "./banner.css";
 
 const images = [ImageA, ImageB, ImageC];
@@ -11,13 +16,29 @@ const eachBannerStyle = {
     backkgroundRepeat: "no-repeat"
   }
 };
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    marginRight: theme.spacing(2)
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6)
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4)
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8)
+  }
+}));
 
 const intervalTime = 5000;
 const auto = true;
-// };
 
 export default function BannerRotate() {
   const classStyle = eachBannerStyle;
+  const classes = useStyles();
   const [slideCount, setSlideCount] = useState(0);
   useEffect(() => {
     if (auto) {
@@ -42,11 +63,35 @@ export default function BannerRotate() {
               }}
             >
               <div className="content">
-                <h1>Find Event Rental Items</h1>
-                <p>
-                  Who knows your next neighbor might have what you are looking
-                  for. Get the best rental service ever!{" "}
-                </p>
+                <Container maxWidth="sm">
+                  <Typography
+                    component="h2"
+                    variant="h3"
+                    align="center"
+                    color="#fff"
+                    gutterBottom
+                  >
+                    Find Event Rental Items
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    color="#fff"
+                    paragraph
+                  >
+                    Who knows your next neighbor might have what you are looking
+                    for. Get the best rental service ever!
+                  </Typography>
+                  <div className={classes.heroButtons}>
+                    <Grid container spacing={2} justify="center">
+                      <Grid item>
+                        <Button variant="contained" color="primary">
+                          Main call to action
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </Container>
               </div>
             </div>
           );
