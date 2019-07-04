@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
+import { Card, Container } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%"
+    paddingTop: "50%"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -53,8 +53,8 @@ export default function FeatureItem() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title="Shrimp Glass Chair"
+        subheader="July 2, 2019"
       />
       <CardMedia
         className={classes.media}
@@ -64,8 +64,7 @@ export default function FeatureItem() {
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          together with your guests.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

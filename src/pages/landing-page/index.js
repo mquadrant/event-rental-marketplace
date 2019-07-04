@@ -25,6 +25,8 @@ import BannerRotate from "./components/banner/bannerRotate";
 import Button from "@material-ui/core/Button";
 import LoginModal from "./components/login/loginModal";
 import FeatureImage from "./components/featureSection/featureImage";
+import BlogSection from "../../pages/landing-page/components/blog-section";
+import Footer from "../../pages/landing-page/footer";
 
 const iconSideMenu = [Https, Search, ListIcon];
 const drawerWidth = 240;
@@ -61,7 +63,9 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    color: "#acacac",
+    background: "#333"
   },
   drawerHeader: {
     display: "flex",
@@ -141,7 +145,6 @@ export default function LandingPage() {
           scrollAppBar === true
             ? {
                 background: "#fff",
-                transition: "all 0.6s",
                 zIndex: "3000"
               }
             : {
@@ -160,16 +163,25 @@ export default function LandingPage() {
           >
             <MenuIcon className={stickyStyle} />
           </IconButton>
-          {!open ? (
+          {
             <Typography
               variant="h6"
               noWrap
               className={classes.title}
-              style={{ color: "orange" }}
+              style={
+                open
+                  ? {
+                      visibility: "hidden"
+                    }
+                  : {
+                      visibility: "visible",
+                      color: "orange"
+                    }
+              }
             >
               LOGO
             </Typography>
-          ) : null}
+          }
           <Button color="inherit" className={stickyStyle}>
             How it works
           </Button>
@@ -208,20 +220,25 @@ export default function LandingPage() {
             LOGO
           </Typography>
         </div>
-        <Divider />
+        <Divider style={{ color: "#3b3b3b" }} />
         <List>
           {["Login/Signup", "Search for item", "List your item"].map(
             (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <Box component={iconSideMenu[index]} />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
+              <>
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    <Box
+                      component={iconSideMenu[index]}
+                      style={{ color: "#acacac" }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+                <Divider style={{ color: "#3b3b3b" }} />
+              </>
             )
           )}
         </List>
-        <Divider />
       </Drawer>
       <main
         onMouseEnter={handleDrawerClose}
@@ -236,20 +253,8 @@ export default function LandingPage() {
           handleSignClose={handleSignClose}
         />
         <FeatureImage />
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <BlogSection />
+        <Footer />
       </main>
     </div>
   );
