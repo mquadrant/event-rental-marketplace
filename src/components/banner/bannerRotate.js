@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ImageA, ImageB, ImageC } from "../../../../images/banner_image";
+import { ImageA, ImageB, ImageC } from "../../images/banner_image";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";

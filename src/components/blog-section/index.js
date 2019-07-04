@@ -8,7 +8,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Hidden from "@material-ui/core/Hidden";
-import BlogImage from "../../../../images/Long-Gallery-Function-layout.jpg";
+import BlogImage from "../../images/Long-Gallery-Function-layout.jpg";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {

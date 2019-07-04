@@ -21,12 +21,8 @@ import Https from "@material-ui/icons/Https";
 import Search from "@material-ui/icons/Search";
 import ListIcon from "@material-ui/icons/List";
 import Box from "@material-ui/core/Box";
-import BannerRotate from "./components/banner/bannerRotate";
 import Button from "@material-ui/core/Button";
-import LoginModal from "./components/login/loginModal";
-import FeatureImage from "./components/featureSection/featureImage";
-import BlogSection from "../../pages/landing-page/components/blog-section";
-import Footer from "../../pages/landing-page/footer";
+import LandingPage from "../pages/landingPage";
 
 const iconSideMenu = [Https, Search, ListIcon];
 const drawerWidth = 240;
@@ -98,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LandingPage() {
+export default function Layout() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [handleSignOpen, setHandleSignOpen] = React.useState(false);
@@ -246,15 +242,10 @@ export default function LandingPage() {
           [classes.contentShift]: open
         })}
       >
-        <div className={classes.drawerHeader} style={{ zIndex: "3300" }} />
-        <BannerRotate />
-        <LoginModal
+        <LandingPage
           handleSignOpen={handleSignOpen}
           handleSignClose={handleSignClose}
         />
-        <FeatureImage />
-        <BlogSection />
-        <Footer />
       </main>
     </div>
   );

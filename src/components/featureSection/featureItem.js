@@ -12,7 +12,7 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ItemImage from "../../../../images/Chair-rentals.jpg";
+import ItemImage from "../../images/Chair-rentals.jpg";
 
 const useStyles = makeStyles((theme) => ({
   card: {
