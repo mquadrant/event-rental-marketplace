@@ -50,7 +50,7 @@ export default function SearchBarForm() {
   return (
     <div>
       <form class="form-inline" action="/action_page.php">
-        <input type="text" value="" placeholder="keywords" />
+        <input type="text" value="jdhdhdh" placeholder="keywords" />
         <select name="cars" placeholder="city">
           {cities.map((city, index) => (
             <option value={city} id={index}>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
+import { Link, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -22,7 +23,7 @@ import Search from "@material-ui/icons/Search";
 import ListIcon from "@material-ui/icons/List";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import LandingPage from "../pages/landingPage";
+import LoginModal from "../components/login/loginModal";
 
 const iconSideMenu = [Https, Search, ListIcon];
 const drawerWidth = 240;
@@ -87,15 +88,23 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: drawerWidth
   },
   button: {
-    margin: theme.spacing(1)
+    textTransform: "Capitalize",
+    margin: theme.spacing(1),
+    fontSize: "16px"
   },
   btnSticky: {
     color: "#000"
   }
 }));
 
-export default function Layout() {
+function Layout(props) {
   const classes = useStyles();
+  const {
+    returnCallModal,
+    callModal,
+    location: { pathname },
+    children
+  } = props;
   const [open, setOpen] = React.useState(false);
   const [handleSignOpen, setHandleSignOpen] = React.useState(false);
 
@@ -103,7 +112,12 @@ export default function Layout() {
   const stickyStyle = `${classes.button + " "}${
     scrollAppBar === true ? classes.btnSticky : ""
   }`;
-
+  useEffect(() => {
+    if (callModal) {
+      setHandleSignOpen(true);
+    }
+    return () => {};
+  }, [callModal]);
   function listenScrollEvent(e) {
     if (window.scrollY > 80) {
       setScrollAppBar(true);
@@ -119,6 +133,7 @@ export default function Layout() {
 
   function handleSignClose() {
     setHandleSignOpen(false);
+    returnCallModal(false);
   }
   function handleDrawerOpen() {
     clearInterval(drawInterval);
@@ -132,21 +147,32 @@ export default function Layout() {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      <LoginModal
+        handleSignOpen={handleSignOpen}
+        handleSignClose={handleSignClose}
+      />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
         style={
-          scrollAppBar === true
+          pathname === "/"
+            ? scrollAppBar === true
+              ? {
+                  background: "#fff",
+                  zIndex: "3000"
+                }
+              : {
+                  boxShadow: "none",
+                  background: "rgba(256,256,256,0)"
+                }
+            : scrollAppBar === true
             ? {
                 background: "#fff",
                 zIndex: "3000"
               }
-            : {
-                boxShadow: "none",
-                background: "rgba(256,256,256,0)"
-              }
+            : null
         }
       >
         <Toolbar>
@@ -195,8 +221,10 @@ export default function Layout() {
             variant="outlined"
             color="secondary"
             className={classes.button}
+            component={Link}
+            to={`/signup`}
           >
-            List Items
+            Get Started
           </Button>
         </Toolbar>
       </AppBar>
@@ -242,11 +270,10 @@ export default function Layout() {
           [classes.contentShift]: open
         })}
       >
-        <LandingPage
-          handleSignOpen={handleSignOpen}
-          handleSignClose={handleSignClose}
-        />
+        {children}
       </main>
     </div>
   );
 }
+
+export default withRouter(Layout);

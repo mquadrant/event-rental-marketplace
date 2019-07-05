@@ -16,9 +16,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#f5f5f5"
   },
   cardGrid: {
-    paddingTop: 30,
-    paddingBottom: 40,
-    marginTop: theme.spacing(4)
+    paddingBottom: 40
   },
   card: {
     display: "flex"
@@ -28,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     width: 160
+  },
+  heroContent: {
+    padding: theme.spacing(6, 0, 6)
   }
 }));
 
@@ -53,6 +54,29 @@ export default function BlogSection() {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="100%" className={classes.mainGrid}>
+        <Container
+          maxWidth="sm"
+          component="main"
+          className={classes.heroContent}
+        >
+          <Typography
+            component="h1"
+            variant="h4"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Blog Posts
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="textSecondary"
+            component="p"
+          >
+            Tips to help you organise your events.
+          </Typography>
+        </Container>
         <Grid container spacing={4} className={classes.cardGrid}>
           {featuredPosts.map((post) => (
             <Grid item key={post.title} xs={12} md={6}>
