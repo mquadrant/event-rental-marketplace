@@ -137,7 +137,11 @@ export default function UserSignUp(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link variant="body2" onClick={() => callModal()}>
+              <Link
+                variant="body2"
+                onClick={() => callModal()}
+                style={{ cursor: "pointer" }}
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>

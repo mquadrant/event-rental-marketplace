@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import useForm from "../../pages/sign-up/helper/useForm";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginForm() {
   const classes = useStyles();
 
+  const { handleChange, handleSubmit, values, errors } = useForm(submit);
+  function submit() {
+    console.log("submitted sucessfully");
+  }
+
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
@@ -51,8 +57,9 @@ export default function LoginForm() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
+            error={errors.email ? true : false}
             variant="outlined"
             margin="normal"
             required
@@ -62,8 +69,11 @@ export default function LoginForm() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
+            value={values.email}
           />
           <TextField
+            // error={errors.password ? true : false}
             variant="outlined"
             margin="normal"
             required
@@ -73,6 +83,8 @@ export default function LoginForm() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
+            value={values.password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
