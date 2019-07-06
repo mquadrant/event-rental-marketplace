@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import useForm from "./helper/useForm";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -39,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
 export default function UserSignUp(props) {
   const classes = useStyles();
   const { callModal } = props;
+
+  const { handleChange, handleSubmit, values, errors } = useForm(submit);
+  function submit() {
+    console.log("submitted sucessfully");
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -49,33 +55,42 @@ export default function UserSignUp(props) {
         <Typography component="h1" variant="h5">
           Create a Profile
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={errors.fname ? true : false}
                 autoComplete="fname"
-                name="firstName"
+                name="fname"
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
+                onChange={handleChange}
+                value={values.fname}
                 autoFocus
+                helperText={errors.fname ? errors.fname : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={errors.lname ? true : false}
                 variant="outlined"
                 required
                 fullWidth
                 id="lastName"
                 label="Last Name"
-                name="lastName"
+                name="lname"
                 autoComplete="lname"
+                value={values.lname}
+                onChange={handleChange}
+                helperText={errors.lname ? errors.lname : ""}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={errors.email ? true : false}
                 variant="outlined"
                 required
                 fullWidth
@@ -83,10 +98,14 @@ export default function UserSignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={values.email}
+                onChange={handleChange}
+                helperText={errors.email ? errors.email : ""}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={errors.password ? true : false}
                 variant="outlined"
                 required
                 fullWidth
@@ -95,6 +114,9 @@ export default function UserSignUp(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={values.password}
+                onChange={handleChange}
+                helperText={errors.password ? errors.password : ""}
               />
             </Grid>
             <Grid item xs={12}>

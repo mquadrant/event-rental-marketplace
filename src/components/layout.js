@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    marginLeft: drawerWidth - 10,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
@@ -140,8 +140,11 @@ function Layout(props) {
     setOpen(true);
   }
 
+  function handleDrawerFastClose() {
+    setOpen(false);
+  }
   function handleDrawerClose() {
-    drawInterval = setTimeout(() => setOpen(false), 800);
+    drawInterval = setTimeout(() => setOpen(false), 400);
   }
 
   return (
@@ -230,6 +233,7 @@ function Layout(props) {
       </AppBar>
       <Drawer
         onMouseEnter={handleDrawerOpen}
+        onMouseLeave={handleDrawerClose}
         className={classes.drawer}
         variant="temporary"
         anchor="left"
@@ -266,6 +270,7 @@ function Layout(props) {
       </Drawer>
       <main
         onMouseEnter={handleDrawerClose}
+        onClick={handleDrawerFastClose}
         className={clsx(classes.content, {
           [classes.contentShift]: open
         })}
