@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import HomeLayout from "../components/layouts/index";
-import ProviderLayout from "../components/layouts/dashboardLayout";
+import DashboardLayout from "../components/layouts/dashboardLayout";
 function Layout(props) {
   const {
     location: { pathname }
@@ -12,7 +12,7 @@ function Layout(props) {
       {!/^\/customer|provider\//.test(pathname) ? (
         <HomeLayout {...props} />
       ) : (
-        <ProviderLayout />
+        <DashboardLayout {...props} />
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
+import CardMedia from "@material-ui/core/CardMedia";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -21,6 +22,9 @@ import Profile from "../../users/dashboard/profile";
 import MyItem from "../../users/provider/myItem";
 import Bookings from "../../users/provider/bookings";
 import Featured from "../../users/provider/featured";
+import { Avatar } from "@material-ui/core";
+import image1 from "../../images/avatar_nick.png";
+import LogoImage from "../../images/bit_rental_200x200 (1).png";
 
 const drawerWidth = 240;
 
@@ -93,10 +97,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
+  },
+  avatar: {
+    margin: 10
   }
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+  const {
+    location: { pathname }
+  } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -136,10 +146,11 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={1} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Avatar alt="Remy Sharp" src={image1} className={classes.avatar} />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -150,14 +161,17 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          <img src={LogoImage} style={{ width: 180, padding: "0 0 0 30px" }} />
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{customerMenus}</List>
-        <Divider />
-        <List>{providerMenus}</List>
+        {/^\/customer\//.test(pathname) ? (
+          <List>{customerMenus(pathname)}</List>
+        ) : (
+          <List>{providerMenus(pathname)}</List>
+        )}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

@@ -29,7 +29,7 @@ const data = [
 export default function Chart() {
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>This Month</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
