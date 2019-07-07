@@ -6,7 +6,6 @@ function Layout(props) {
   const {
     location: { pathname }
   } = props;
-  console.log(pathname);
   return (
     <div>
       {!/^\/customer|provider\//.test(pathname) ? (
