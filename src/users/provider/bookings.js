@@ -1,5 +1,10 @@
 import React from "react";
+import BookingTable from "./bookingTable";
 
 export default function bookings() {
-  return <div>I am in booking provider</div>;
+  return (
+    <div>
+      <BookingTable />
+    </div>
+  );
 }
