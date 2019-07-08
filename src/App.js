@@ -30,6 +30,7 @@ function App() {
                 <SignUp {...props} doCallModal={doCallModal} />
               )}
             />
+            <Route path="*" component={() => "404 NOT FOUND"} />
           </Switch>
         </Layout>
       </React-Fragment>

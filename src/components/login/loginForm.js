@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { getUsers } from "../../data";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,12 +53,13 @@ export default function LoginForm(props) {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (
-      !(
-        values.password === "1234567890" &&
-        values.email === "mquadrant@gmail.com"
-      )
-    ) {
+    const users = getUsers();
+    const loginUser = users.filter((user) => {
+      if (values.password === user.password && values.email === user.email) {
+        return user;
+      }
+    });
+    if (loginUser.length === 0) {
       setError(true);
       return;
     }

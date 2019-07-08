@@ -21,7 +21,7 @@ import Profile from "../../users/dashboard/profile";
 import MyItem from "../../users/provider/myItem";
 import Bookings from "../../users/provider/bookings";
 import Featured from "../../users/provider/featured";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Switch } from "@material-ui/core";
 import image1 from "../../images/avatar_nick.png";
 import LogoImage from "../../images/bit_rental_200x200 (1).png";
 
@@ -179,11 +179,13 @@ export default function Dashboard(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Route path="/provider/dashboard" component={ProviderDash} />
-        <Route path="/provider/profile" component={Profile} />
-        <Route path="/provider/items" component={MyItem} />
-        <Route path="/provider/bookings" component={Bookings} />
-        <Route path="/provider/featured" component={Featured} />
+        <Switch>
+          <Route path="/provider/dashboard" component={ProviderDash} />
+          <Route path="/provider/profile" component={Profile} />
+          <Route path="/provider/items" component={MyItem} />
+          <Route path="/provider/bookings" component={Bookings} />
+          <Route path="/provider/featured" component={Featured} />
+        </Switch>
       </main>
     </div>
   );
