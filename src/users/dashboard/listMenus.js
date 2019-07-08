@@ -9,7 +9,6 @@ import Person from "@material-ui/icons/Person";
 import PublicIcon from "@material-ui/icons/Public";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import Divider from "@material-ui/core/Divider";
 
 const customerPages = {
   profile: "/customer/profile",

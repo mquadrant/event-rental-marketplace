@@ -8,10 +8,9 @@ import {
   Grid,
   Button
 } from "@material-ui/core";
-import Person from "@material-ui/icons/Person";
+// import Person from "@material-ui/icons/Person";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import image1 from "../../images/avatar_nick.png";
 import { country_list as countries } from "../dashboard/listStateCountry";
@@ -81,7 +80,7 @@ export default function Profile() {
             <Grid item md={5}>
               <Grid container>
                 <Grid item align="center" sm={12}>
-                  <img src={image1} className={classes.image} />
+                  <img src={image1} alt="profile" className={classes.image} />
                 </Grid>
                 <Grid item align="center" sm={12}>
                   <Button

@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import CardMedia from "@material-ui/core/CardMedia";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -162,7 +161,11 @@ export default function Dashboard(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <img src={LogoImage} style={{ width: 180, padding: "0 0 0 30px" }} />
+          <img
+            src={LogoImage}
+            alt="logo"
+            style={{ width: 180, padding: "0 0 0 30px" }}
+          />
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>

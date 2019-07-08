@@ -266,8 +266,7 @@ export default function BookingTable() {
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === "desc";
@@ -326,7 +325,7 @@ export default function BookingTable() {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            size={"medium"}
           >
             <EnhancedTableHead
               numSelected={selected.length}
