@@ -75,6 +75,7 @@ function Layout(props) {
     container,
     returnCallModal,
     callModal,
+    history,
     location: { pathname },
     children
   } = props;
@@ -155,6 +156,7 @@ function Layout(props) {
     <div className={classes.root}>
       <CssBaseline />
       <LoginModal
+        history={history}
         handleSignOpen={handleSignOpen}
         handleSignClose={handleSignClose}
       />

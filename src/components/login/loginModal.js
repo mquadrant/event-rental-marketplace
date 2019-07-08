@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginModal(props) {
   const [open, setOpen] = React.useState(false);
-  const { handleSignOpen, handleSignClose } = props;
+  const { handleSignOpen, handleSignClose, history } = props;
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -53,7 +53,7 @@ export default function LoginModal(props) {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
-          <LoginForm />
+          <LoginForm history={history} />
         </div>
       </Modal>
     </div>

@@ -7,13 +7,13 @@ function Layout(props) {
     location: { pathname }
   } = props;
   return (
-    <div>
+    <>
       {!/^\/customer|provider\//.test(pathname) ? (
         <HomeLayout {...props} />
       ) : (
         <DashboardLayout {...props} />
       )}
-    </div>
+    </>
   );
 }
 export default withRouter(Layout);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -39,13 +39,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LoginForm() {
+export default function LoginForm(props) {
   const classes = useStyles();
-
-  const { handleChange, handleSubmit, values, errors } = useForm(submit);
-  function submit() {
-    console.log("submitted sucessfully");
-  }
+  const { history } = props;
+  const [values, setValues] = useState({
+    email: "",
+    password: ""
+  });
+  const [error, setError] = useState(false);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (
+      !(
+        values.password === "1234567890" &&
+        values.email === "mquadrant@gmail.com"
+      )
+    ) {
+      setError(true);
+      return;
+    }
+    // store.set('loggedIn', true);
+    history.push("/provider/dashboard");
+  };
+  useEffect(() => {
+    setError(false);
+    return () => {};
+  }, [values]);
+  function submit() {}
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
@@ -57,9 +81,9 @@ export default function LoginForm() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form onSubmit={handleSubmit} className={classes.form}>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
-            error={errors.email ? true : false}
+            error={error ? true : false}
             variant="outlined"
             margin="normal"
             required
@@ -73,7 +97,7 @@ export default function LoginForm() {
             value={values.email}
           />
           <TextField
-            // error={errors.password ? true : false}
+            error={error ? true : false}
             variant="outlined"
             margin="normal"
             required
@@ -110,6 +134,9 @@ export default function LoginForm() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
+            <p style={{ color: "red" }}>
+              {error ? "Incorrect credentails" : null}
+            </p>
           </Grid>
         </form>
       </div>

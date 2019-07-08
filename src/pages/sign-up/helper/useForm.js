@@ -22,7 +22,6 @@ const useForm = (callback) => {
   };
 
   useEffect(() => {
-    console.log(errors);
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
     } else console.log("no callback");

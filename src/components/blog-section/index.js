@@ -13,7 +13,8 @@ import BlogImage from "../../images/Long-Gallery-Function-layout.jpg";
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
-    background: "#f5f5f5"
+    background: "#f5f5f5",
+    maxWidth: "100%"
   },
   cardGrid: {
     paddingBottom: 40
@@ -53,7 +54,7 @@ export default function BlogSection() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="100%" className={classes.mainGrid}>
+      <Container className={classes.mainGrid}>
         <Container
           maxWidth="sm"
           component="main"

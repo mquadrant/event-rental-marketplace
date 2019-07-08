@@ -23,7 +23,7 @@ export default function Footer() {
   return (
     <div>
       <footer className={classes.footer}>
-        <Container maxWidth="100%">
+        <Container style={{ maxWidth: "100%" }}>
           <Typography
             variant="subtitle1"
             align="center"

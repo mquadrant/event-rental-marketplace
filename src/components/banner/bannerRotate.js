@@ -59,6 +59,7 @@ export default function BannerRotate() {
         {images.map((image, index) => {
           return (
             <div
+              key={index}
               className={`slide ${index === slideCount ? "current" : ""}`}
               style={{
                 ...classStyle.bannerItem,
@@ -71,7 +72,7 @@ export default function BannerRotate() {
                     component="h2"
                     variant="h3"
                     align="center"
-                    color="#fff"
+                    style={{ color: "#fff" }}
                     gutterBottom
                   >
                     Find Event Rental Items
@@ -79,7 +80,7 @@ export default function BannerRotate() {
                   <Typography
                     variant="h6"
                     align="center"
-                    color="#fff"
+                    style={{ color: "#fff" }}
                     paragraph
                   >
                     Who knows your next neighbor might have what you are looking
