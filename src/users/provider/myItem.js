@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import Link from "@material-ui/core/Link";
 import {
   Divider,
   Typography,
@@ -91,43 +92,57 @@ export default function MyItem() {
             </Container>
             <Divider />
             <div style={{ height: 550, overflow: "auto" }}>
-              {[1, 2, 3, 4].map((item) => (
-                <>
-                  <Container
-                    style={{
-                      padding: 15,
-                      backgroundColor: "#f5f5f5"
-                    }}
-                  >
-                    <Grid container>
-                      <Grid item xs={6} sm={9}>
-                        <CardMedia
-                          className={classes.cardMedia}
-                          image="https://source.unsplash.com/random"
-                          title="Image title"
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
-                        <FormControl
-                          variant="outlined"
-                          className={classes.formControl}
-                        >
-                          <StyledSelect
-                            native
-                            value={state[item]}
-                            onChange={handleChange(item)}
-                            input={<OutlinedInput name={item} id={item} />}
+              {["John chair", "lamp", "party desk", "chandelier"].map(
+                (item, index) => (
+                  <>
+                    <Container
+                      style={{
+                        padding: 15,
+                        backgroundColor: "#f5f5f5"
+                      }}
+                    >
+                      <Grid container>
+                        <Grid item xs={6} sm={4}>
+                          <CardMedia
+                            className={classes.cardMedia}
+                            image="https://source.unsplash.com/random"
+                            title="Image title"
+                          />
+                        </Grid>
+                        <Grid item xs={6} sm={5}>
+                          <Typography component="h2" variant="h5">
+                            {item}
+                          </Typography>
+                          <Link
+                            href={`./provider/items/${index}`}
+                            variant="body2"
                           >
-                            <option value="listed">listed</option>
-                            <option value="unlisted">unlisted</option>
-                          </StyledSelect>
-                        </FormControl>
+                            {"Manage listing"}
+                          </Link>
+                        </Grid>
+                        <Grid item xs={6} sm={3}>
+                          <FormControl
+                            variant="outlined"
+                            className={classes.formControl}
+                          >
+                            <StyledSelect
+                              native
+                              value={state[item]}
+                              onChange={handleChange(item)}
+                              input={<OutlinedInput name={item} id={item} />}
+                            >
+                              <option value="listed">listed</option>
+                              <option value="unlisted">unlisted</option>
+                              <option value="delete">delete</option>
+                            </StyledSelect>
+                          </FormControl>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Container>
-                  <Divider />
-                </>
-              ))}
+                    </Container>
+                    <Divider />
+                  </>
+                )
+              )}
             </div>
           </Paper>
         </Grid>
@@ -146,18 +161,29 @@ export default function MyItem() {
             </Container>
             <Divider />
             <div style={{ height: 550, overflow: "auto" }}>
-              {[5, 6].map((item) => (
+              {[5, 6].map((item, index) => (
                 <>
                   <Container
                     style={{ padding: 15, backgroundColor: "#f5f5f5" }}
                   >
                     <Grid container>
-                      <Grid item xs={6} md={9}>
+                      <Grid item xs={6} md={4}>
                         <CardMedia
                           className={classes.cardMedia}
                           image="https://source.unsplash.com/random"
                           title="Image title"
                         />
+                      </Grid>
+                      <Grid item xs={6} sm={5}>
+                        <Typography component="h2" variant="h5">
+                          {item}
+                        </Typography>
+                        <Link
+                          href={`./provider/items/${index}`}
+                          variant="body2"
+                        >
+                          {"Manage listing"}
+                        </Link>
                       </Grid>
                       <Grid item xs={6} sm={3}>
                         <FormControl
@@ -172,6 +198,7 @@ export default function MyItem() {
                           >
                             <option value="listed">listed</option>
                             <option value="unlisted">unlisted</option>
+                            <option value="delete">delete</option>
                           </StyledSelect>
                         </FormControl>
                       </Grid>
