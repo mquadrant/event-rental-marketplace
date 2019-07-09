@@ -10,6 +10,7 @@ import MyItem from "./users/provider/myItem";
 import Bookings from "./users/provider/bookings";
 import Featured from "./users/provider/featured";
 import ProtectedRoute from "./pages/sign-up/helper/protectedRoute";
+import NotFound from "./pages/404";
 
 function App() {
   const [callModal, setCallModal] = useState(false);
@@ -36,7 +37,7 @@ function App() {
                 <SignUp {...props} doCallModal={doCallModal} />
               )}
             />
-            <Route path="/404" component={() => "404 NOT FOUND"} />
+            <Route path="/404" component={NotFound} />
             <ProtectedRoute
               exact
               path="/provider/dashboard"
