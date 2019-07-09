@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { getUsers } from "../../data";
+import auth from "../../pages/sign-up/helper/auth";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -54,15 +56,16 @@ export default function LoginForm(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const users = getUsers();
-    const loginUser = users.filter((user) => {
-      if (values.password === user.password && values.email === user.email) {
-        return user;
-      }
-    });
+    const loginUser = users.filter(
+      (user) => values.password === user.password && values.email === user.email
+    );
     if (loginUser.length === 0) {
       setError(true);
       return;
     }
+    auth.login(() => {
+      localStorage.setItem("token", loginUser[0].username);
+    });
     // store.set('loggedIn', true);
     history.push("/provider/dashboard");
   };
@@ -70,9 +73,17 @@ export default function LoginForm(props) {
     setError(false);
     return () => {};
   }, [values]);
-  function submit() {}
 
-  return (
+  return auth.isAuthenticated() ? (
+    <Redirect
+      to={{
+        pathname: "/provider/dashboard",
+        state: {
+          from: props.location
+        }
+      }}
+    />
+  ) : (
     <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

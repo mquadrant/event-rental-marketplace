@@ -8,7 +8,7 @@ function Layout(props) {
   } = props;
   return (
     <>
-      {!/^\/customer|provider\//.test(pathname) ? (
+      {!/^\/customer\/|provider\//.test(pathname) ? (
         <HomeLayout {...props} />
       ) : (
         <DashboardLayout {...props} />

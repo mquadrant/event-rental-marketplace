@@ -1,9 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
+import { Drawer } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -16,14 +16,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { customerMenus, providerMenus } from "../../users/dashboard/listMenus";
-import ProviderDash from "../../users/provider";
-import Profile from "../../users/dashboard/profile";
-import MyItem from "../../users/provider/myItem";
-import Bookings from "../../users/provider/bookings";
-import Featured from "../../users/provider/featured";
-import { Avatar, Switch } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import image1 from "../../images/avatar_nick.png";
 import LogoImage from "../../images/bit_rental_200x200 (1).png";
+import LogoutMenu from "./logoutButton";
 
 const drawerWidth = 240;
 
@@ -103,9 +99,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Dashboard(props) {
+function Dashboard(props) {
   const {
-    location: { pathname }
+    history,
+    location: { pathname },
+    children
   } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -151,6 +149,7 @@ export default function Dashboard(props) {
             </Badge>
           </IconButton>
           <Avatar alt="Remy Sharp" src={image1} className={classes.avatar} />
+          <LogoutMenu history={history} />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -179,14 +178,10 @@ export default function Dashboard(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Switch>
-          <Route path="/provider/dashboard" component={ProviderDash} />
-          <Route path="/provider/profile" component={Profile} />
-          <Route path="/provider/items" component={MyItem} />
-          <Route path="/provider/bookings" component={Bookings} />
-          <Route path="/provider/featured" component={Featured} />
-        </Switch>
+        {children}
       </main>
     </div>
   );
 }
+
+export default withRouter(Dashboard);
