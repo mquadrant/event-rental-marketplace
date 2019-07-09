@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./components/layout";
 import LandingPage from "./pages/landingPage";
 import SignUp from "./pages/sign-up";
@@ -36,6 +36,7 @@ function App() {
                 <SignUp {...props} doCallModal={doCallModal} />
               )}
             />
+            <Route path="/404" component={() => "404 NOT FOUND"} />
             <ProtectedRoute
               exact
               path="/provider/dashboard"
@@ -57,12 +58,20 @@ function App() {
               path="/provider/featured"
               component={Featured}
             />
+            <Route
+              component={(props) => (
+                <Redirect
+                  to={{
+                    pathname: "/404",
+                    state: {
+                      from: props.location
+                    }
+                  }}
+                />
+              )}
+            />
           </Switch>
         </Layout>
-        <Route path="*" component={() => "404 NOT FOUND"} />
-        <Route path="*" component={() => <h2>jkjhjh</h2>} />
-        <Route path="*" component={() => "404 NOT FOUNDhhghfghhjmb"} />
-        <Route path="*" component={() => "404 NOT FOUND"} />
       </React-Fragment>
     </BrowserRouter>
   );

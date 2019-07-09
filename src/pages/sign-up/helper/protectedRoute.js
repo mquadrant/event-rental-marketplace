@@ -8,7 +8,7 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
       {...rest}
       render={(props) => {
         if (auth.isAuthenticated()) {
-          return <Component {...props} />;
+          return <Component exact {...props} />;
         } else {
           return (
             <Redirect
