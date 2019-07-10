@@ -20,6 +20,7 @@ import { Avatar } from "@material-ui/core";
 import image1 from "../../images/avatar_nick.png";
 import LogoImage from "../../images/bit_rental_200x200 (1).png";
 import LogoutMenu from "./logoutButton";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -105,6 +106,7 @@ function Dashboard(props) {
     location: { pathname },
     children
   } = props;
+  console.log(props.user.username);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -142,6 +144,9 @@ function Dashboard(props) {
             className={classes.title}
           >
             Dashboard
+          </Typography>
+          <Typography variant="subtitle1" color="inherit">
+            Welcome, {props.user.username}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={1} color="secondary">
@@ -184,4 +189,10 @@ function Dashboard(props) {
   );
 }
 
-export default withRouter(Dashboard);
+// export default withRouter(Dashboard);
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user
+  };
+};
+export default connect(mapStateToProps)(withRouter(Dashboard));

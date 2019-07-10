@@ -14,6 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { getUsers } from "../../data";
 import auth from "../../pages/sign-up/helper/auth";
+import { connect } from "react-redux";
+import addUser from "../../redux/user/userActions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,9 +43,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LoginForm(props) {
+function LoginForm(props) {
   const classes = useStyles();
   const { history } = props;
+
+  console.log(props);
+
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -66,7 +71,7 @@ export default function LoginForm(props) {
     auth.login(() => {
       localStorage.setItem("token", loginUser[0].username);
     });
-    // store.set('loggedIn', true);
+    props.addLoginUser(loginUser[0]);
     history.push("/provider/dashboard");
   };
   useEffect(() => {
@@ -155,3 +160,21 @@ export default function LoginForm(props) {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addLoginUser: (user) => {
+      dispatch(addUser(user));
+    }
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);

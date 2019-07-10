@@ -1,13 +1,16 @@
 const initState = {
-  user: {
-    id: "1",
-    name: "Benjamin Mark",
-    city: "Lagos"
-  }
+  user: {}
 };
 
 const userReducer = (state = initState, action) => {
-  return state;
+  switch (action.type) {
+    case "ADD_USER":
+      return Object.assign({}, state, {
+        user: action.user
+      });
+    default:
+      return state;
+  }
 };
 
 export default userReducer;
