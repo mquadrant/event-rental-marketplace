@@ -106,7 +106,6 @@ function Dashboard(props) {
     location: { pathname },
     children
   } = props;
-  console.log(props.user.username);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
