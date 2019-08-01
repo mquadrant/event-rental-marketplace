@@ -7,12 +7,11 @@ require("dotenv").config();
 var app = require("../dist/app").default;
 var debug = require("debug")("server:server");
 var http = require("http");
-// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 /**
  * Get port from environment and store in Express.
  */
-console.log("yes", process.env.PORT);
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
@@ -21,6 +20,26 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
+
+/**
+ * Create MongoDb Connection.
+ */
+let DB;
+if (process.env.NODE_ENV === "production") {
+  DB = process.env.DATABASE_URI;
+} else {
+  DB = process.env.DATABASE_LOCAL;
+}
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .then(con => {
+    console.log("DB connection successful!");
+  })
+  .catch(err => console.err(err));
 
 /**
  * Listen on provided port, on all network interfaces.
