@@ -3,15 +3,16 @@
 /**
  * Module dependencies.
  */
-
+require("dotenv").config();
 var app = require("../dist/app").default;
 var debug = require("debug")("server:server");
 var http = require("http");
+// import mongoose from "mongoose";
 
 /**
  * Get port from environment and store in Express.
  */
-
+console.log("yes", process.env.PORT);
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
