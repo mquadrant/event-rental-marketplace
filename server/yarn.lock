@@ -359,6 +359,14 @@
   dependencies:
     "@types/express" "*"
 
+"@types/express-graphql@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/express-graphql/-/express-graphql-0.8.0.tgz#2c32c72190ad303c991dc4f04488250001a31af1"
+  integrity sha512-Gzhx6v15CRLnWbD7C9nmQTPd+QXRuJhOovQVyQjw15e2LjmVYI06BhUdAlGtf7sg/BMIeVW6M8RtNww+8HowuA==
+  dependencies:
+    "@types/express" "*"
+    "@types/graphql" "*"
+
 "@types/express-serve-static-core@*":
   version "4.16.7"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.16.7.tgz#50ba6f8a691c08a3dd9fa7fba25ef3133d298049"
@@ -376,7 +384,7 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/graphql@^14.2.3":
+"@types/graphql@*", "@types/graphql@^14.2.3":
   version "14.2.3"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.2.3.tgz#cfc6420a67eb20420786f90112357921974593b9"
   integrity sha512-UoCovaxbJIxagCvVfalfK7YaNhmxj3BQFRQ2RHQKLiu+9wNXhJnlbspsLHt/YQM99IaLUUFJNzCwzc6W0ypMeQ==
