@@ -1,9 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, { Schema,Document } from "mongoose";
+
+//Define a Typescript Interface
+export interface IItem extends Document {
+        item_title:string;
+        description:string;
+        price:number;
+        host_name:string;
+        store_address:string;
+        service_type:string;
+        pay_option:string;
+        image_url: [string];
+        createdAt: string | Date;
+        modifiedAt: string | Date; 
+    }
 
 //Product Schema
-const Schema = mongoose.Schema;
-
-const eventItemSchema = new Schema({
+const eventItemSchema:Schema = new Schema({
     item_title: {
         type: String,
         required: [true, "An item must have a title"],
@@ -49,14 +61,28 @@ const eventItemSchema = new Schema({
         required: [true, "An item must have image url"],
         trim: true,
     },
-    date: {
-        type: Date,
-        required: [true, "An item must have creation date"]
+    createdAt: {
+        type: Date
     },
-    __v: {
-        type: Number,
-        select: false,
+    modifiedAt: {
+        type: Date
     }
 })
 
-export default mongoose.model('Item',eventItemSchema)
+//ADDING date created and date modified using Mongoose
+//Document middleware before saving
+eventItemSchema.pre<IItem>('save',function(next):any{
+        if (this) {
+          let doc = <IItem>this;
+          let now = new Date();
+          if (!doc.createdAt) {
+              doc.createdAt = now;
+          }
+          doc.modifiedAt = now;
+        }
+        next();
+        return this;
+});
+
+
+export default mongoose.model<IItem>('Item',eventItemSchema)
