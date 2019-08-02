@@ -7,6 +7,7 @@ import graphqlHttp from "express-graphql";
 import { buildSchema } from "graphql";
 
 import EventItem from "./models/ItemModel";
+import User from "./models/userModel";
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
@@ -30,44 +31,87 @@ app.use(
     "/graphql",
     graphqlHttp({
         schema: buildSchema(`
-  type EventItem {
-    _id: ID!
-    item_title: String!
-    description: String!
-    price: Float!
-    host_name: String!
-    store_address: String!
-    service_type: String!
-    pay_option: String!
-    image_url:[String!]!
-    createdAt: String!
-    modifiedAt: String!
-  }
+        type EventItem {
+          _id: ID!
+          item_title: String!
+          description: String!
+          price: Float!
+          host_name: String!
+          store_address: String!
+          service_type: String!
+          pay_option: String!
+          image_url:[String!]!
+          createdAt: String!
+          modifiedAt: String!
+        }
 
-  input EventInput {
-    item_title: String!
-    description: String!
-    price: Float!
-    host_name: String!
-    store_address: String!
-    service_type: String!
-    pay_option: String!
-    image_url:[String!]!
-  }
+        type AddressDetail  {
+          address: String
+          country: String
+          state: String
+          city: String
+      }
 
-  type RootQuery {
-    eventItems:[EventItem!]!
-  }
+        type Social {
+          facebook: String
+          twitter: String
+          instagram: String
+      }
 
-  type RootMutation{
-    createEvent(eventItem:EventInput):EventItem
-  }
+        type User {
+          _id: ID!
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String
+          phone: String!
+          bio: String
+          website: String
+          image_url: String
+          isProvider: String!
+          createdAt: String
+          addressDetail: AddressDetail,
+          social: Social
+        }
 
-  schema{
-    query: RootQuery,
-    mutation: RootMutation
-  }
-  `),
+        input ItemInput {
+          item_title: String!
+          description: String!
+          price: Float!
+          host_name: String!
+          store_address: String!
+          service_type: String!
+          pay_option: String!
+          image_url:[String!]!
+        }
+
+        input UserInput {
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
+          phone: String!
+          bio: String
+          website: String
+          isProvider: Boolean!
+          image_url: String
+          
+        }
+
+        type RootQuery {
+          eventItems:[EventItem!]!
+        }
+
+        type RootMutation{
+          createEvent(itemInput:ItemInput):EventItem,
+          createUser(userInput:UserInput):User
+        }
+
+        schema{
+          query: RootQuery,
+          mutation: RootMutation
+        }
+      `),
         rootValue: {
             eventItems: () => {
                 try {
@@ -79,17 +123,36 @@ app.use(
             },
             createEvent: async (args: any) => {
                 const item = new EventItem({
-                    item_title: args.eventItem.item_title,
-                    description: args.eventItem.description,
-                    price: args.eventItem.price,
-                    host_name: args.eventItem.host_name,
-                    store_address: args.eventItem.store_address,
-                    service_type: args.eventItem.service_type,
-                    pay_option: args.eventItem.pay_option,
-                    image_url: args.eventItem.image_url,
+                    item_title: args.itemInput.item_title,
+                    description: args.itemInput.description,
+                    price: args.itemInput.price,
+                    host_name: args.itemInput.host_name,
+                    store_address: args.itemInput.store_address,
+                    service_type: args.itemInput.service_type,
+                    pay_option: args.itemInput.pay_option,
+                    image_url: args.itemInput.image_url,
                 });
                 try {
                     const result = await item.save();
+                    return result;
+                } catch (err) {
+                    throw err;
+                }
+            },
+            createUser: async (args: any) => {
+                const user = new User({
+                    firstName: args.userInput.firstName,
+                    lastName: args.userInput.lastName,
+                    email: args.userInput.email,
+                    password: args.userInput.password,
+                    phone: args.userInput.phone,
+                    bio: args.userInput.bio,
+                    website: args.userInput.website,
+                    isProvider: args.userInput.isProvider,
+                    image_url: args.userInput.image_url,
+                });
+                try {
+                    const result = await user.save();
                     return result;
                 } catch (err) {
                     throw err;
