@@ -30,11 +30,6 @@ const eventItemSchema: Schema = new Schema({
         type: Number,
         required: [true, "An item must have a price tag"],
     },
-    host_name: {
-        type: String,
-        required: [true, "An item must have a host name"],
-        trim: true,
-    },
     store_address: {
         type: String,
         required: [true, "An item must have a store address"],
@@ -66,6 +61,10 @@ const eventItemSchema: Schema = new Schema({
     },
     modifiedAt: {
         type: Date,
+    },
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
 });
 
