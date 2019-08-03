@@ -7,9 +7,9 @@ export interface IUser extends Document {
     phone: String;
     bio?: String;
     website?: String;
-    password?: String;
+    password?: String | null;
     isProvider: Boolean;
-    createdAt: String;
+    createdAt: String | Date;
     image_url?: string;
     addressDetail?: {
         address: String;
@@ -79,6 +79,17 @@ const userSchema: Schema = new Schema({
             ref: "Item",
         },
     ],
+});
+
+//ADDING date created and date modified using Mongoose
+//Document middleware before saving
+userSchema.post<IUser>("save", function(_doc, next): any {
+    if (_doc) {
+        let doc = <IUser>_doc;
+        doc.password = null;
+    }
+    next();
+    return _doc;
 });
 
 export default mongoose.model<IUser>("User", userSchema, "users");
