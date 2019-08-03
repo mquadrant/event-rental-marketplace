@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IUser extends Document {
+    _doc?: Promise<this>;
     firstName: String;
     lastName: String;
     email: String;

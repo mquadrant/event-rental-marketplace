@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 //Define a Typescript Interface
 export interface IItem extends Document {
+    _doc?: Promise<this>;
     item_title: string;
     description: string;
     price: number;
@@ -70,7 +71,7 @@ const eventItemSchema: Schema = new Schema({
 
 //ADDING date created and date modified using Mongoose
 //Document middleware before saving
-eventItemSchema.pre<IItem>("save", function(next): any {
+eventItemSchema.pre("save", function(next): any {
     if (this) {
         let doc = <IItem>this;
         let now = new Date().toISOString();
