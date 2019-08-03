@@ -4,16 +4,20 @@ import EventItem from "../../models/ItemModel";
 import User from "../../models/userModel";
 
 //Nested GraphQL Query
-const eventItem = (itemIds: string[]): Promise<any> => {
-    return EventItem.find({ _id: { $in: itemIds } })
-        .then(items => {
-            return items.map(item => {
-                return { ...item._doc, creator: user.bind(item, item.creator) };
-            });
-        })
-        .catch(err => {
-            throw err;
+const eventItem = async (itemIds: string[]): Promise<any> => {
+    try {
+        const items = await EventItem.find({ _id: { $in: itemIds } });
+        items.map(item => {
+            return {
+                ...item._doc,
+                createdAt: new Date(item.createdAt).toISOString(),
+                modifiedAt: new Date(item.modifiedAt).toISOString(),
+                creator: user.bind(item, item.creator),
+            };
         });
+    } catch (err) {
+        throw err;
+    }
 };
 const user = async (userId: String) => {
     try {
@@ -29,20 +33,21 @@ const user = async (userId: String) => {
 };
 
 export default {
-    eventItems: () => {
-        return EventItem.find()
-            .then(items => {
-                return items.map(item => {
-                    return {
-                        ...item._doc,
-                        _id: item.id,
-                        creator: user.bind(item, item.creator),
-                    };
-                });
-            })
-            .catch(err => {
-                throw err;
+    eventItems: async () => {
+        try {
+            const items = await EventItem.find();
+            items.map(item => {
+                return {
+                    ...item._doc,
+                    _id: item.id,
+                    createdAt: new Date(item.createdAt).toISOString(),
+                    modifiedAt: new Date(item.modifiedAt).toISOString(),
+                    creator: user.bind(item, item.creator),
+                };
             });
+        } catch (err) {
+            throw err;
+        }
     },
     createEvent: async (args: any) => {
         const item = new EventItem({

@@ -74,14 +74,25 @@ const eventItemSchema: Schema = new Schema({
 eventItemSchema.pre("save", function(next): any {
     if (this) {
         let doc = <IItem>this;
-        let now = new Date().toISOString();
         if (!doc.createdAt) {
-            doc.createdAt = now;
+            doc.createdAt = new Date().toISOString();
         }
-        doc.modifiedAt = now;
+        doc.modifiedAt = new Date().toISOString();
     }
     next();
     return this;
+});
+
+//Changing the date to ISOString
+//Document middleware after saving
+eventItemSchema.post<IItem>("save", function(_doc, next): any {
+    if (_doc) {
+        let doc = <IItem>_doc;
+        doc.createdAt = new Date(doc.createdAt).toISOString();
+        doc.modifiedAt = new Date(doc.modifiedAt).toISOString();
+    }
+    next();
+    return _doc;
 });
 
 export default mongoose.model<IItem>("Item", eventItemSchema);
