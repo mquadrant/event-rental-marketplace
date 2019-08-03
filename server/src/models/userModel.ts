@@ -22,7 +22,7 @@ export interface IUser extends Document {
         twitter: String;
         instagram: String;
     };
-    createdItems?: string[];
+    createdItems: string[];
 }
 
 const userSchema: Schema = new Schema({
@@ -81,8 +81,8 @@ const userSchema: Schema = new Schema({
     ],
 });
 
-//ADDING date created and date modified using Mongoose
-//Document middleware before saving
+//NULLIFING the password using Mongoose
+//Document middleware after saving
 userSchema.post<IUser>("save", function(_doc, next): any {
     if (_doc) {
         let doc = <IUser>_doc;

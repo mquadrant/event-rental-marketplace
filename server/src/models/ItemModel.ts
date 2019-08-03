@@ -5,13 +5,13 @@ export interface IItem extends Document {
     item_title: string;
     description: string;
     price: number;
-    host_name: string;
     store_address: string;
     service_type: string;
     pay_option: string;
     image_url: [string];
     createdAt: string | Date;
     modifiedAt: string | Date;
+    creator: string;
 }
 
 //Product Schema

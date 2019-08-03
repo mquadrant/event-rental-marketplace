@@ -3,8 +3,10 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+
 import graphqlHttp from "express-graphql";
 import { buildSchema } from "graphql";
+import bcrypt from "bcryptjs";
 
 import EventItem from "./models/ItemModel";
 import User from "./models/userModel";
@@ -36,13 +38,13 @@ app.use(
           item_title: String!
           description: String!
           price: Float!
-          host_name: String!
           store_address: String!
           service_type: String!
           pay_option: String!
           image_url:[String!]!
           createdAt: String!
           modifiedAt: String!
+          creator: String!
         }
 
         type AddressDetail  {
@@ -78,11 +80,11 @@ app.use(
           item_title: String!
           description: String!
           price: Float!
-          host_name: String!
           store_address: String!
           service_type: String!
           pay_option: String!
           image_url:[String!]!
+          creator: String!
         }
 
         input UserInput {
@@ -126,32 +128,50 @@ app.use(
                     item_title: args.itemInput.item_title,
                     description: args.itemInput.description,
                     price: args.itemInput.price,
-                    host_name: args.itemInput.host_name,
                     store_address: args.itemInput.store_address,
                     service_type: args.itemInput.service_type,
                     pay_option: args.itemInput.pay_option,
                     image_url: args.itemInput.image_url,
+                    creator: args.itemInput.creator,
                 });
                 try {
+                    //check if the user_id exists
+                    const user = await User.findById(args.itemInput.creator);
+                    if (!user) throw new Error("User not found");
+                    //save the item
                     const result = await item.save();
+                    //add the item_id to the user document
+                    user.createdItems.push(result._id);
+                    await user.save();
+                    //return the created item
                     return result;
                 } catch (err) {
                     throw err;
                 }
             },
             createUser: async (args: any) => {
-                const user = new User({
-                    firstName: args.userInput.firstName,
-                    lastName: args.userInput.lastName,
-                    email: args.userInput.email,
-                    password: args.userInput.password,
-                    phone: args.userInput.phone,
-                    bio: args.userInput.bio,
-                    website: args.userInput.website,
-                    isProvider: args.userInput.isProvider,
-                    image_url: args.userInput.image_url,
-                });
                 try {
+                    const userExisting = await User.findOne({
+                        email: args.userInput.email,
+                    });
+                    if (userExisting) throw new Error("User exist already.");
+                    const hashedPassword = await bcrypt.hash(
+                        args.userInput.password,
+                        12
+                    );
+                    const user = new User({
+                        firstName: args.userInput.firstName,
+                        lastName: args.userInput.lastName,
+                        email: args.userInput.email,
+                        password: hashedPassword,
+                        phone: args.userInput.phone,
+                        bio: args.userInput.bio,
+                        website: args.userInput.website,
+                        isProvider: args.userInput.isProvider,
+                        image_url: args.userInput.image_url,
+                        createdAt: new Date().toISOString(),
+                    });
+
                     const result = await user.save();
                     return result;
                 } catch (err) {
