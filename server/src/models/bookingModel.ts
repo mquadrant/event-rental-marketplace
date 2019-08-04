@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Timestamp } from "bson";
 
 export interface IBooking extends Document {
     _doc?: Promise<this>;
@@ -12,6 +11,8 @@ export interface IBooking extends Document {
     pickup_date: string | Date;
     return_date: string | Date;
     warranty: boolean;
+    createdAt: string | Date;
+    updatedAt: string | Date;
 }
 
 const bookingSchema: Schema = new Schema(

@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 
 import EventItem from "../../models/ItemModel";
 import User from "../../models/userModel";
+import Booking from "../../models/bookingModel";
 
 //Nested GraphQL Query
 const eventItem = async (itemIds: string[]): Promise<any> => {
@@ -33,6 +34,7 @@ const user = async (userId: String) => {
 };
 
 export default {
+    //Queries
     eventItems: async () => {
         try {
             const items = await EventItem.find();
@@ -49,6 +51,22 @@ export default {
             throw err;
         }
     },
+    bookings: async () => {
+        try {
+            const bookings = await Booking.find();
+            return bookings.map(booking => {
+                return {
+                    ...booking._doc,
+                    _id: booking.id,
+                    createdAt: new Date(booking.createdAt).toISOString(),
+                    updatedAt: new Date(booking.updatedAt).toISOString(),
+                };
+            });
+        } catch (err) {
+            throw err;
+        }
+    },
+    //Mutations
     createEvent: async (args: any) => {
         const item = new EventItem({
             item_title: args.itemInput.item_title,
