@@ -8,7 +8,7 @@ export interface IUser extends Document {
     phone: string;
     bio?: string;
     website?: string;
-    password?: string | null;
+    password: string;
     isProvider: boolean;
     createdAt: string | Date;
     image_url?: string;
@@ -81,18 +81,6 @@ const userSchema: Schema = new Schema({
             ref: "Item",
         },
     ],
-});
-
-//NULLIFING the password using Mongoose and changing the date to ISOString
-//Document middleware after saving
-userSchema.post<IUser>("save", function(_doc, next): any {
-    if (_doc) {
-        let doc = <IUser>_doc;
-        doc.password = null;
-        doc.createdAt = new Date(doc.createdAt).toISOString();
-    }
-    next();
-    return _doc;
 });
 
 export default mongoose.model<IUser>("User", userSchema, "users");

@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import User from "../../models/userModel";
 import { dateToString } from "../../helpers/date";
@@ -30,7 +31,30 @@ export default {
             const result = await user.save();
             return {
                 ...result._doc,
+                password: null,
                 createdAt: dateToString(result.createdAt),
+            };
+        } catch (err) {
+            throw err;
+        }
+    },
+    login: async (args: any) => {
+        try {
+            const user = await User.findOne({ email: args.email });
+            if (!user) throw new Error("Login Failed");
+            const isEqual = await bcrypt.compare(args.password, user.password);
+            if (!isEqual) throw new Error("Login Failed");
+            const token = jwt.sign(
+                { userId: user.id, email: user.email },
+                "somesupersecretkey",
+                {
+                    expiresIn: "1h",
+                }
+            );
+            return {
+                userId: user.id,
+                token: token,
+                tokenExpiration: 1,
             };
         } catch (err) {
             throw err;

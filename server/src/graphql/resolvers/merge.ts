@@ -29,6 +29,7 @@ const user = async (userId: String) => {
         if (!_user) throw new Error("User not found");
         return {
             ..._user._doc,
+            password: null,
             createdAt: dateToString(_user.createdAt),
             createdItems: eventItem.bind(_user, _user.createdItems),
         };

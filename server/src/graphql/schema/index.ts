@@ -106,9 +106,16 @@ input BookingInput {
           addressDetail: AddressDetailInput
         }
 
+        type AuthData{
+          userId:ID!
+          token: String!
+          tokenExpiration: Int!
+        }
+
         type RootQuery {
           eventItems:[EventItem!]!
           bookings:[Booking!]!
+          login(email:String!, password:String!): AuthData!
         }
 
         type RootMutation{
