@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import EventItem, { IItem } from "../../models/ItemModel";
 import User from "../../models/userModel";
 import Booking from "../../models/bookingModel";
+import { dateToString } from "../../helpers/date";
 
 //Nested GraphQL Query
 const eventItem = async (itemIds: string[]): Promise<any> => {
@@ -11,8 +12,8 @@ const eventItem = async (itemIds: string[]): Promise<any> => {
         return items.map(item => {
             return {
                 ...item._doc,
-                createdAt: new Date(item.createdAt).toISOString(),
-                modifiedAt: new Date(item.modifiedAt).toISOString(),
+                createdAt: dateToString(item.createdAt),
+                modifiedAt: dateToString(item.modifiedAt),
                 creator: user.bind(item, item.creator),
             };
         });
@@ -26,8 +27,8 @@ const singleItem = async (itemId: IItem): Promise<any> => {
         if (!item) throw new Error("Item not found");
         return {
             ...item._doc,
-            createdAt: new Date(item.createdAt).toISOString(),
-            modifiedAt: new Date(item.modifiedAt).toISOString(),
+            createdAt: dateToString(item.createdAt),
+            modifiedAt: dateToString(item.modifiedAt),
             creator: user.bind(item, item.creator),
         };
     } catch (err) {
@@ -40,7 +41,7 @@ const user = async (userId: String) => {
         if (!_user) throw new Error("User not found");
         return {
             ..._user._doc,
-            createdAt: new Date(_user.createdAt).toISOString(),
+            createdAt: dateToString(_user.createdAt),
             createdItems: eventItem.bind(_user, _user.createdItems),
         };
     } catch (err) {
@@ -56,9 +57,8 @@ export default {
             return items.map(item => {
                 return {
                     ...item._doc,
-                    _id: item.id,
-                    createdAt: new Date(item.createdAt).toISOString(),
-                    modifiedAt: new Date(item.modifiedAt).toISOString(),
+                    createdAt: dateToString(item.createdAt),
+                    modifiedAt: dateToString(item.modifiedAt),
                     creator: user.bind(item, item.creator),
                 };
             });
@@ -73,10 +73,9 @@ export default {
                 return {
                     ...booking._doc,
                     _id: booking.id,
-                    pickup_date: new Date(booking.pickup_date).toISOString(),
-                    return_date: new Date(booking.return_date).toISOString(),
-                    createdAt: new Date(booking.createdAt).toISOString(),
-                    updatedAt: new Date(booking.updatedAt).toISOString(),
+                    pickup_date: dateToString(booking.pickup_date),
+                    createdAt: dateToString(booking.createdAt),
+                    updatedAt: dateToString(booking.updatedAt),
                     item: singleItem.bind(booking, booking.item),
                     user: user.bind(booking, booking.user),
                 };
@@ -86,7 +85,7 @@ export default {
         }
     },
     //Mutations
-    createEvent: async (args: any) => {
+    createItem: async (args: any) => {
         const item = new EventItem({
             item_title: args.itemInput.item_title,
             description: args.itemInput.description,
@@ -111,8 +110,8 @@ export default {
             //return the created items
             return {
                 ...result._doc,
-                createdAt: new Date(result.createdAt).toISOString(),
-                modifiedAt: new Date(result.modifiedAt).toISOString(),
+                createdAt: dateToString(result.createdAt),
+                modifiedAt: dateToString(result.modifiedAt),
                 creator: user.bind(item, result.creator),
             };
         } catch (err) {
@@ -145,7 +144,7 @@ export default {
             const result = await user.save();
             return {
                 ...result._doc,
-                createdAt: new Date(result.createdAt).toISOString(),
+                createdAt: dateToString(result.createdAt),
             };
         } catch (err) {
             throw err;
@@ -169,10 +168,10 @@ export default {
             const result = await booking.save();
             return {
                 ...result._doc,
-                pickup_date: new Date(result.pickup_date).toISOString(),
-                return_date: new Date(result.return_date).toISOString(),
-                createdAt: new Date(result.createdAt).toISOString(),
-                updatedAt: new Date(result.updatedAt).toISOString(),
+                pickup_date: dateToString(result.pickup_date),
+                return_date: dateToString(result.return_date),
+                createdAt: dateToString(result.createdAt),
+                updatedAt: dateToString(result.updatedAt),
                 item: singleItem.bind(result, result.item),
                 user: user.bind(result, result.user),
             };
@@ -188,8 +187,8 @@ export default {
             if (!booking) throw new Error("booking not exist");
             const item = {
                 ...booking.item._doc,
-                createdAt: new Date(booking.item.createdAt).toISOString(),
-                modifiedAt: new Date(booking.item.modifiedAt).toISOString(),
+                createdAt: dateToString(booking.item.createdAt),
+                modifiedAt: dateToString(booking.item.modifiedAt),
                 creator: user.bind(booking.item, booking.item.creator),
             };
             await Booking.deleteOne({ _id: args.bookingId });

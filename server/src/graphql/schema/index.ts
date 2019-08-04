@@ -112,7 +112,7 @@ input BookingInput {
         }
 
         type RootMutation{
-          createEvent(itemInput:ItemInput):EventItem,
+          createItem(itemInput:ItemInput):EventItem,
           createUser(userInput:UserInput):User
           bookItem(bookingInput:BookingInput):Booking!
           cancelBooking(bookingId:ID!):EventItem!
