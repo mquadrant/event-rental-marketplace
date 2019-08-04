@@ -59,6 +59,7 @@ const eventItemSchema: Schema = new Schema({
     },
     createdAt: {
         type: Date,
+        required: true,
     },
     modifiedAt: {
         type: Date,
@@ -75,9 +76,9 @@ eventItemSchema.pre("save", function(next): any {
     if (this) {
         let doc = <IItem>this;
         if (!doc.createdAt) {
-            doc.createdAt = new Date().toISOString();
+            doc.createdAt = new Date();
         }
-        doc.modifiedAt = new Date().toISOString();
+        doc.modifiedAt = new Date();
     }
     next();
     return this;

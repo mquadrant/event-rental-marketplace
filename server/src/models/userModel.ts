@@ -58,7 +58,8 @@ const userSchema: Schema = new Schema({
         required: [true, "A user should have password"],
     },
     createdAt: {
-        type: String,
+        type: Date,
+        required: true,
     },
     addressDetail: {
         address: String,

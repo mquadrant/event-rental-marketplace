@@ -10,8 +10,8 @@ export default buildSchema(`
           service_type: String!
           pay_option: String!
           image_url:[String!]!
-          createdAt: String!
-          modifiedAt: String!
+          createdAt: String
+          modifiedAt: String
           creator: User!
         }
 

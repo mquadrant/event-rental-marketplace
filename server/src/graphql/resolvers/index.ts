@@ -7,7 +7,7 @@ import User from "../../models/userModel";
 const eventItem = async (itemIds: string[]): Promise<any> => {
     try {
         const items = await EventItem.find({ _id: { $in: itemIds } });
-        items.map(item => {
+        return items.map(item => {
             return {
                 ...item._doc,
                 createdAt: new Date(item.createdAt).toISOString(),
@@ -36,7 +36,7 @@ export default {
     eventItems: async () => {
         try {
             const items = await EventItem.find();
-            items.map(item => {
+            return items.map(item => {
                 return {
                     ...item._doc,
                     _id: item.id,
@@ -59,6 +59,8 @@ export default {
             pay_option: args.itemInput.pay_option,
             image_url: args.itemInput.image_url,
             creator: args.itemInput.creator,
+            createdAt: new Date().toISOString(),
+            modifiedAt: new Date().toISOString(),
         });
         try {
             //check if the user_id exists
@@ -67,15 +69,17 @@ export default {
             //save the item
             const result = await item.save();
             //add the item_id to the user document
-            _user.createdItems.push(result._id);
+            _user.createdItems.push(result.id);
             await _user.save();
             //return the created items
             return {
                 ...result._doc,
+                createdAt: new Date(result.createdAt).toISOString(),
+                modifiedAt: new Date(result.modifiedAt).toISOString(),
                 creator: user.bind(item, result.creator),
             };
         } catch (err) {
-            throw err;
+            throw new Error(err);
         }
     },
     createUser: async (args: any) => {
@@ -102,7 +106,10 @@ export default {
             });
 
             const result = await user.save();
-            return result;
+            return {
+                ...result._doc,
+                createdAt: new Date(result.createdAt).toISOString(),
+            };
         } catch (err) {
             throw err;
         }
