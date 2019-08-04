@@ -1,6 +1,27 @@
 import { buildSchema } from "graphql";
 
 export default buildSchema(`
+type Booking {
+    _id: ID!
+    eventItem: EventItem!
+    user: User!
+    quantity: Int!
+    amount: Float!
+    status: String!
+    booking_description: String!
+    pickup_date: String!
+    return_date: String!
+    warranty: Boolean!;
+}
+input BookingInput {
+    itemID: String!
+    quantity: Int!
+    amount: Float!
+    booking_description: String!
+    pickup_date: String!
+    return_date: String!
+    warranty: Boolean!;
+}
         type EventItem {
           _id: ID!
           item_title: String!
@@ -84,11 +105,14 @@ export default buildSchema(`
 
         type RootQuery {
           eventItems:[EventItem!]!
+          bookings:[Booking!]!
         }
 
         type RootMutation{
           createEvent(itemInput:ItemInput):EventItem,
           createUser(userInput:UserInput):User
+          bookItem(bookingInput:BookingInput):Booking!
+          cancelBooking(bookingId:ID!):EventItem!
         }
 
         schema{
