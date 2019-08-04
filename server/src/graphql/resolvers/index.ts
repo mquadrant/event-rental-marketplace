@@ -74,6 +74,7 @@ export default {
                     ...booking._doc,
                     _id: booking.id,
                     pickup_date: dateToString(booking.pickup_date),
+                    return_date: dateToString(booking.return_date),
                     createdAt: dateToString(booking.createdAt),
                     updatedAt: dateToString(booking.updatedAt),
                     item: singleItem.bind(booking, booking.item),
