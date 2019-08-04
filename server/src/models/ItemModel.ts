@@ -6,6 +6,7 @@ export interface IItem extends Document {
     item_title: string;
     description: string;
     price: number;
+    available: number;
     store_address: string;
     service_type: string;
     pay_option: string;
@@ -30,6 +31,10 @@ const eventItemSchema: Schema = new Schema({
     price: {
         type: Number,
         required: [true, "An item must have a price tag"],
+    },
+    available: {
+        type: Number,
+        required: [true, "Number of available item for rent should be giving"],
     },
     store_address: {
         type: String,

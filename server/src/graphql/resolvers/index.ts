@@ -54,6 +54,7 @@ export default {
             item_title: args.itemInput.item_title,
             description: args.itemInput.description,
             price: args.itemInput.price,
+            available: args.itemInput.available,
             store_address: args.itemInput.store_address,
             service_type: args.itemInput.service_type,
             pay_option: args.itemInput.pay_option,
