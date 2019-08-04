@@ -6,9 +6,8 @@ export interface IItem extends Document {
     item_title: string;
     description: string;
     price: number;
-    available: number;
+    item_available: number;
     store_address: string;
-    service_type: string;
     pay_option: string;
     image_url: [string];
     createdAt: string | Date;
@@ -32,7 +31,7 @@ const eventItemSchema: Schema = new Schema({
         type: Number,
         required: [true, "An item must have a price tag"],
     },
-    available: {
+    item_available: {
         type: Number,
         required: [true, "Number of available item for rent should be giving"],
     },
@@ -41,20 +40,12 @@ const eventItemSchema: Schema = new Schema({
         required: [true, "An item must have a store address"],
         trim: true,
     },
-    service_type: {
-        type: String,
-        required: [true, "An item must have a service type"],
-        enum: {
-            values: ["Rent", "Purchase"],
-            message: "Service type is either: Rent, Purchase",
-        },
-    },
     pay_option: {
         type: String,
         required: [true, "An item must have pay option"],
         enum: {
-            values: ["Pay online", "Pay on delivery"],
-            message: "pay_option is either: online, delivery",
+            values: ["Pay online", "Pay on pickup"],
+            message: "pay_option is either: Pay online, Pay on pickup",
         },
     },
     image_url: {
@@ -62,16 +53,16 @@ const eventItemSchema: Schema = new Schema({
         required: [true, "An item must have image url"],
         trim: true,
     },
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
     createdAt: {
         type: Date,
         required: true,
     },
     modifiedAt: {
         type: Date,
-    },
-    creator: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
     },
 });
 

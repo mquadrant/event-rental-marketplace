@@ -6,9 +6,8 @@ export default buildSchema(`
           item_title: String!
           description: String!
           price: Float!
-          available:Int!
+          item_available:Int!
           store_address: String!
-          service_type: String!
           pay_option: String!
           image_url:[String!]!
           createdAt: String
@@ -50,9 +49,8 @@ export default buildSchema(`
           item_title: String!
           description: String!
           price: Float!
-          available:Int!
+          item_available:Int!
           store_address: String!
-          service_type: String!
           pay_option: String!
           image_url:[String!]!
           creator: String!
