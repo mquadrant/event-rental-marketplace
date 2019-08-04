@@ -3,7 +3,7 @@ import { buildSchema } from "graphql";
 export default buildSchema(`
 type Booking {
     _id: ID!
-    eventItem: EventItem!
+    item: EventItem!
     user: User!
     quantity: Int!
     amount: Float!
@@ -11,16 +11,19 @@ type Booking {
     booking_description: String!
     pickup_date: String!
     return_date: String!
-    warranty: Boolean!;
+    warranty: Boolean!
+    createdAt: String!
+    updatedAt: String!
 }
 input BookingInput {
     itemID: String!
+    userID: String!
     quantity: Int!
     amount: Float!
     booking_description: String!
     pickup_date: String!
     return_date: String!
-    warranty: Boolean!;
+    warranty: Boolean!
 }
         type EventItem {
           _id: ID!

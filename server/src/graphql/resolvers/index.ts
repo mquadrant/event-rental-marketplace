@@ -20,12 +20,27 @@ const eventItem = async (itemIds: string[]): Promise<any> => {
         throw err;
     }
 };
+const singleItem = async (itemId: string): Promise<any> => {
+    try {
+        const item = await EventItem.findById(itemId);
+        if (!item) throw new Error("Item not found");
+        return {
+            ...item._doc,
+            createdAt: new Date(item.createdAt).toISOString(),
+            modifiedAt: new Date(item.modifiedAt).toISOString(),
+            creator: user.bind(item, item.creator),
+        };
+    } catch (err) {
+        throw err;
+    }
+};
 const user = async (userId: String) => {
     try {
         const _user = await User.findById(userId);
         if (!_user) throw new Error("User not found");
         return {
             ..._user._doc,
+            createdAt: new Date(_user.createdAt).toISOString(),
             createdItems: eventItem.bind(_user, _user.createdItems),
         };
     } catch (err) {
@@ -58,8 +73,12 @@ export default {
                 return {
                     ...booking._doc,
                     _id: booking.id,
+                    pickup_date: new Date(booking.pickup_date).toISOString(),
+                    return_date: new Date(booking.return_date).toISOString(),
                     createdAt: new Date(booking.createdAt).toISOString(),
                     updatedAt: new Date(booking.updatedAt).toISOString(),
+                    item: singleItem.bind(booking, booking.item),
+                    user: user.bind(booking, booking.user),
                 };
             });
         } catch (err) {
@@ -130,6 +149,38 @@ export default {
             };
         } catch (err) {
             throw err;
+        }
+    },
+    bookItem: async (args: any) => {
+        const booking = new Booking({
+            item: args.bookingInput.itemID,
+            user: args.bookingInput.userID,
+            quantity: args.bookingInput.quantity,
+            amount: args.bookingInput.amount,
+            booking_description: args.bookingInput.booking_description,
+            pickup_date: args.bookingInput.pickup_date,
+            return_date: args.bookingInput.return_date,
+            warranty: args.bookingInput.warranty,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+        });
+        try {
+            //check if the item_id exists
+            // const _item = await EventItem.findById(args.bookingInput.itemID);
+            // if (!_item) throw new Error("Item not found");
+            //save the booking
+            const result = await booking.save();
+            return {
+                ...result._doc,
+                pickup_date: new Date(result.pickup_date).toISOString(),
+                return_date: new Date(result.return_date).toISOString(),
+                createdAt: new Date(result.createdAt).toISOString(),
+                updatedAt: new Date(result.updatedAt).toISOString(),
+                item: singleItem.bind(result, result.item),
+                user: user.bind(result, result.user),
+            };
+        } catch (err) {
+            throw new Error(err);
         }
     },
 };
