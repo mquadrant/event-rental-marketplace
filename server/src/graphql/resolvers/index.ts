@@ -2,20 +2,37 @@ import bcrypt from "bcryptjs";
 
 import EventItem, { IItem } from "../../models/ItemModel";
 import User from "../../models/userModel";
-import Booking from "../../models/bookingModel";
+import Booking, { IBooking } from "../../models/bookingModel";
 import { dateToString } from "../../helpers/date";
+
+//Booking result transformation
+const transformBooking = (booking: IBooking) => {
+    return {
+        ...booking._doc,
+        pickup_date: dateToString(booking.pickup_date),
+        return_date: dateToString(booking.return_date),
+        createdAt: dateToString(booking.createdAt),
+        updatedAt: dateToString(booking.updatedAt),
+        item: singleItem.bind(booking, booking.item),
+        user: user.bind(booking, booking.user),
+    };
+};
+//Item result transformation
+const transformItem = (item: IItem) => {
+    return {
+        ...item._doc,
+        createdAt: dateToString(item.createdAt),
+        modifiedAt: dateToString(item.modifiedAt),
+        creator: user.bind(item, item.creator),
+    };
+};
 
 //Nested GraphQL Query
 const eventItem = async (itemIds: string[]): Promise<any> => {
     try {
         const items = await EventItem.find({ _id: { $in: itemIds } });
         return items.map(item => {
-            return {
-                ...item._doc,
-                createdAt: dateToString(item.createdAt),
-                modifiedAt: dateToString(item.modifiedAt),
-                creator: user.bind(item, item.creator),
-            };
+            return transformItem(item);
         });
     } catch (err) {
         throw err;
@@ -25,12 +42,7 @@ const singleItem = async (itemId: IItem): Promise<any> => {
     try {
         const item = await EventItem.findById(itemId);
         if (!item) throw new Error("Item not found");
-        return {
-            ...item._doc,
-            createdAt: dateToString(item.createdAt),
-            modifiedAt: dateToString(item.modifiedAt),
-            creator: user.bind(item, item.creator),
-        };
+        return transformItem(item);
     } catch (err) {
         throw err;
     }
@@ -55,12 +67,7 @@ export default {
         try {
             const items = await EventItem.find();
             return items.map(item => {
-                return {
-                    ...item._doc,
-                    createdAt: dateToString(item.createdAt),
-                    modifiedAt: dateToString(item.modifiedAt),
-                    creator: user.bind(item, item.creator),
-                };
+                return transformItem(item);
             });
         } catch (err) {
             throw err;
@@ -70,16 +77,7 @@ export default {
         try {
             const bookings = await Booking.find();
             return bookings.map(booking => {
-                return {
-                    ...booking._doc,
-                    _id: booking.id,
-                    pickup_date: dateToString(booking.pickup_date),
-                    return_date: dateToString(booking.return_date),
-                    createdAt: dateToString(booking.createdAt),
-                    updatedAt: dateToString(booking.updatedAt),
-                    item: singleItem.bind(booking, booking.item),
-                    user: user.bind(booking, booking.user),
-                };
+                return transformBooking(booking);
             });
         } catch (err) {
             throw err;
@@ -109,12 +107,7 @@ export default {
             _user.createdItems.push(result.id);
             await _user.save();
             //return the created items
-            return {
-                ...result._doc,
-                createdAt: dateToString(result.createdAt),
-                modifiedAt: dateToString(result.modifiedAt),
-                creator: user.bind(item, result.creator),
-            };
+            return transformItem(result);
         } catch (err) {
             throw new Error(err);
         }
@@ -167,15 +160,7 @@ export default {
         try {
             //save the booking
             const result = await booking.save();
-            return {
-                ...result._doc,
-                pickup_date: dateToString(result.pickup_date),
-                return_date: dateToString(result.return_date),
-                createdAt: dateToString(result.createdAt),
-                updatedAt: dateToString(result.updatedAt),
-                item: singleItem.bind(result, result.item),
-                user: user.bind(result, result.user),
-            };
+            return transformBooking(result);
         } catch (err) {
             throw new Error(err);
         }
@@ -186,12 +171,7 @@ export default {
                 "item"
             );
             if (!booking) throw new Error("booking not exist");
-            const item = {
-                ...booking.item._doc,
-                createdAt: dateToString(booking.item.createdAt),
-                modifiedAt: dateToString(booking.item.modifiedAt),
-                creator: user.bind(booking.item, booking.item.creator),
-            };
+            const item = transformItem(booking.item);
             await Booking.deleteOne({ _id: args.bookingId });
             return item;
         } catch (err) {
