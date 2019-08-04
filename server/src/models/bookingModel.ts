@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { IItem } from "./ItemModel";
 
-export interface IBooking extends Document {
+export interface IBooking extends Document, IItem {
     _doc?: Promise<this>;
-    item: string;
+    item: IItem;
     user: string;
     quantity: number;
     amount: number;
@@ -17,18 +18,14 @@ export interface IBooking extends Document {
 
 const bookingSchema: Schema = new Schema(
     {
-        item: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Item",
-            },
-        ],
-        user: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: "Item",
+        },
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
         quantity: {
             type: Number,
             required: [true, "item quantity must be specified"],
@@ -59,4 +56,8 @@ const bookingSchema: Schema = new Schema(
     { timestamps: true }
 );
 
-export default mongoose.model<IBooking>("Book", bookingSchema, "bookings");
+export default mongoose.model<IBooking & IItem>(
+    "Book",
+    bookingSchema,
+    "bookings"
+);

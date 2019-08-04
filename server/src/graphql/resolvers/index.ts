@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-import EventItem from "../../models/ItemModel";
+import EventItem, { IItem } from "../../models/ItemModel";
 import User from "../../models/userModel";
 import Booking from "../../models/bookingModel";
 
@@ -20,7 +20,7 @@ const eventItem = async (itemIds: string[]): Promise<any> => {
         throw err;
     }
 };
-const singleItem = async (itemId: string): Promise<any> => {
+const singleItem = async (itemId: IItem): Promise<any> => {
     try {
         const item = await EventItem.findById(itemId);
         if (!item) throw new Error("Item not found");
@@ -165,9 +165,6 @@ export default {
             updatedAt: new Date().toISOString(),
         });
         try {
-            //check if the item_id exists
-            // const _item = await EventItem.findById(args.bookingInput.itemID);
-            // if (!_item) throw new Error("Item not found");
             //save the booking
             const result = await booking.save();
             return {
@@ -181,6 +178,24 @@ export default {
             };
         } catch (err) {
             throw new Error(err);
+        }
+    },
+    cancelBooking: async (args: any) => {
+        try {
+            const booking = await Booking.findById(args.bookingId).populate(
+                "item"
+            );
+            if (!booking) throw new Error("booking not exist");
+            const item = {
+                ...booking.item._doc,
+                createdAt: new Date(booking.item.createdAt).toISOString(),
+                modifiedAt: new Date(booking.item.modifiedAt).toISOString(),
+                creator: user.bind(booking.item, booking.item.creator),
+            };
+            await Booking.deleteOne({ _id: args.bookingId });
+            return item;
+        } catch (err) {
+            throw err;
         }
     },
 };
