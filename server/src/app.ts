@@ -7,6 +7,7 @@ import logger from "morgan";
 import graphqlHttp from "express-graphql";
 import graphqlSchema from "./graphql/schema";
 import graphqlResolver from "./graphql/resolvers";
+import isAuth from "./middleware/is-auth";
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+app.use(isAuth);
 app.use(
     "/graphql",
     graphqlHttp({

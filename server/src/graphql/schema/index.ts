@@ -77,7 +77,6 @@ input BookingInput {
           store_address: String!
           pay_option: String!
           image_url:[String!]!
-          creator: String!
         }
 
         input AddressDetailInput  {

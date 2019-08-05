@@ -3,7 +3,10 @@ import Booking from "../../models/bookingModel";
 
 export default {
     //Queries
-    bookings: async () => {
+    bookings: async (_args: any, req: any) => {
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
         try {
             const bookings = await Booking.find();
             return bookings.map(booking => {
@@ -14,10 +17,13 @@ export default {
         }
     },
     //Mutations
-    bookItem: async (args: any) => {
+    bookItem: async (args: any, req: any) => {
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
         const booking = new Booking({
             item: args.bookingInput.itemID,
-            user: args.bookingInput.userID,
+            user: req.userId,
             quantity: args.bookingInput.quantity,
             amount: args.bookingInput.amount,
             booking_description: args.bookingInput.booking_description,
@@ -35,7 +41,10 @@ export default {
             throw new Error(err);
         }
     },
-    cancelBooking: async (args: any) => {
+    cancelBooking: async (args: any, req: any) => {
+        if (!req.isAuth) {
+            throw new Error("Unauthenticated!");
+        }
         try {
             const booking = await Booking.findById(args.bookingId).populate(
                 "item"
