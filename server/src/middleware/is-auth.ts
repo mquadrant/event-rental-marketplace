@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 export = (req: any, _res: any, _next: any) => {
     const authHeader = req.get("Authorization");
-    console.log("i am here");
     if (!authHeader) {
         req.isAuth = false;
         return _next();
