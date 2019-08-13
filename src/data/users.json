@@ -1,0 +1,70 @@
+[
+  {
+    "username": "bifato",
+    "firstName": "Biodun",
+    "lastName": "Fatoyinbo",
+    "email": "biodun@gmail.com",
+    "phone": "08067140834",
+    "bio": "I am biodun",
+    "website": "biodaun.com",
+    "password": "12345asdfg",
+    "provider": true,
+    "customer": false,
+    "created": "2019-01-21T08:24:05+01:00",
+    "addressDetail": {
+      "address": "311 Woodbine Street, Catharine, Kentucky, 8240",
+      "country": "Nigeria",
+      "state": "Lagos",
+      "city": "Lagos"
+    },
+    "Social": {
+      "facebook": "www.facebook.com/fatoyin",
+      "twitter": "www.twitter.com/fatoyin"
+    }
+  },
+  {
+    "username": "seun4life",
+    "firstName": "Seun",
+    "lastName": "Jayeoba",
+    "email": "sjaye@gmail.com",
+    "phone": "08045237641",
+    "bio": "I am a software developer",
+    "website": "jayedde.com",
+    "password": "23$ryUhdgs2",
+    "provider": false,
+    "customer": true,
+    "created": "2019-07-07T08:24:05+01:00",
+    "addressDetail": {
+      "address": "6, Agbaje street off Doyin Omololu street Ketu Lagos",
+      "country": "Nigeria",
+      "state": "Lagos",
+      "city": "Lagos"
+    },
+    "Social": {
+      "facebook": "www.facebook.com/slimj",
+      "twitter": "www.twitter.com/slimj"
+    }
+  },
+  {
+    "username": "joneman",
+    "firstName": "Johnny",
+    "lastName": "Sebastain",
+    "email": "joneman@gmail.com",
+    "phone": "01-234356387",
+    "bio": "I am an event manager with 7 years experience",
+    "website": "",
+    "password": "hdg123E48$e",
+    "provider": true,
+    "created": "2019-05-30T08:24:05+01:00",
+    "addressDetail": {
+      "address": "311 Woodbine Street, Catharine, Kentucky, 8240",
+      "country": "Nigeria",
+      "state": "Oyo",
+      "city": "Ibadan"
+    },
+    "Social": {
+      "facebook": "www.facebook.com/joneman4",
+      "twitter": "www.twitter.com/joneman4"
+    }
+  }
+]
